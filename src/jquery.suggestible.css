@@ -1,0 +1,70 @@
+.suggestible {
+  
+}
+
+.suggestible-list {
+  position: absolute;
+	list-style-type: none;
+	margin: 2px 0 0 0;
+	padding: 0;
+	font-size: 14px;
+	color: #000;
+	font-family: "Lucida Grande", arial, sans-serif;
+	background-color: #fff;
+	background-color: rgba(255,255,255,0.95);
+	z-index: 2;
+	box-shadow: 0 2px 12px #222;
+	-webkit-box-shadow: 0 2px 12px #222;
+	-moz-box-shadow: 0 2px 12px #222;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+
+li.suggestible-item.active {
+	background-color: #3668d9;
+	background-image: -moz-linear-gradient(top, rgb(110, 129, 245), rgb(62, 82, 242));
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 64%, from(rgb(110, 129, 245)), to(rgb(62, 82, 242)));
+	border-color: #3342e8;
+	color: #fff;
+	text-shadow: 0 1px 2px #122042;
+}
+
+/*li.suggestible-item, li.as-message {
+  margin: 0 0 0 0;
+  padding: 5px 12px;
+  background-color: transparent;
+  border: 1px solid #fff;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+*/
+li:first-child.suggestible-item {
+	margin: 0;
+}
+
+li.suggestible-item.active {
+	background-color: #3668d9;
+	background-image: -moz-linear-gradient(top, rgb(110, 129, 245), rgb(62, 82, 242));
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 64%, from(rgb(110, 129, 245)), to(rgb(62, 82, 242)));
+	border-color: #3342e8;
+	color: #fff;
+	text-shadow: 0 1px 2px #122042;
+}
+
+/*li.as-result-item em { 
+  font-style: normal; 
+  background: #444;  
+  padding: 0 2px;
+  color: #fff;
+}
+*/
+/*li.as-result-item.active em { 
+  background: #253f7a;  
+  color: #fff;
+}
+*/
