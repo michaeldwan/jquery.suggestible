@@ -2,7 +2,7 @@
   $.fn.suggestible = function (options) {
     var defaults = {
       source: [],
-      delay: 400,
+      delay: 0,
       minLength: 1,
       extractSearchTerms: function (suggestion) {
         return suggestion;
@@ -34,8 +34,8 @@
 
     (function initSource() {
       if ($.isArray(options.source)) {
-        source = function(terms) {
-          return options.source;
+        source = function(terms, callback) {
+          callback(options.source);
         };
       } else {
         source = options.source;
@@ -66,11 +66,11 @@
         }
 
         $this.addClass('loading');
-        var items = source(term);
-        var suggestions = options.rejectSelected(filter(items, term));
-        $this.removeClass('loading');
-        callback(suggestions, term);
-        return true;
+        source(term, function (results) {
+          var suggestions = options.rejectSelected(filter(results, term));
+          $this.removeClass('loading');
+          callback(suggestions, term);
+        });
       }
 
       function loadSuggestions (suggestions, term) {
@@ -155,7 +155,7 @@
           default:
             clearTimeout( search_timeout );
             search_timeout = setTimeout(function() {
-              // only search if the value has changed
+              // only search if the value changed
               if ( lastSearch != $this.val() ) {
                 search($this.val(), loadSuggestions);
               }
