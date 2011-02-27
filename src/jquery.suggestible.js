@@ -16,7 +16,9 @@
       extractSearchTerms: function (value) {
         return value.title || value.name || value.label || value.value || value;
       },
-      onSelect: $.noop
+      onSelect: function (value, suggestible) {
+        $(suggestible).val(value);
+      }
     };
     var options = $.extend(defaults, options);
     var source;
@@ -100,7 +102,7 @@
         var raw_data = $("li.active", $results_ul).data("item");
         hideSuggestions();
         clearSearch();
-        options.onSelect(raw_data);
+        options.onSelect(raw_data, $this);
       }
       
       function clearSearch () {
