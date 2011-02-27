@@ -43,7 +43,7 @@
     })();
 
     return this.each(function() {
-      $this = $(this);
+      var $this = $(this);
       var id = $(this).attr('id');
       var lastSearch = false;
       var search_timeout;
@@ -153,10 +153,10 @@
             e.preventDefault();
             break;
           default:
-            clearTimeout( search_timeout );
+            clearTimeout(search_timeout);
             search_timeout = setTimeout(function() {
               // only search if the value changed
-              if ( lastSearch != $this.val() ) {
+              if (lastSearch != $this.val()) {
                 search($this.val(), loadSuggestions);
               }
             }, options.delay );
