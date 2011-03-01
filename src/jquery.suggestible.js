@@ -102,7 +102,9 @@
         var raw_data = $("li.active", $results_ul).data("item");
         hideSuggestions();
         clearSearch();
-        options.onSelect(raw_data, $this);
+        if (raw_data) {
+          options.onSelect(raw_data, $this);
+        }
       }
       
       function clearSearch () {
