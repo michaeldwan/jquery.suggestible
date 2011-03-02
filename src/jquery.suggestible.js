@@ -14,7 +14,7 @@
         return suggestions;
       },
       extractSearchTerms: function (value) {
-        return value.title || value.name || value.label || value.value || value;
+        return [value];
       },
       onSelect: function (value, suggestible) {
         $(suggestible).val(value);
@@ -28,9 +28,16 @@
     }
     
     function filter(array, term) {
-      var matcher = new RegExp(escapeRegex(term), "i");
+      var matcher = new RegExp('^' + escapeRegex(term), "i");
       return $.grep(array, function(value) {
-        return matcher.test( options.extractSearchTerms(value) );
+        var match = false;
+        $.each(options.extractSearchTerms(value), function (index, term) {
+          if (matcher.test($.trim(term))) {
+            match = true;
+            return;
+          }
+        })
+        return match;
       });
     }
 
