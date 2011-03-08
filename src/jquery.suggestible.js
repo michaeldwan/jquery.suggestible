@@ -4,6 +4,7 @@
       source: [],
       delay: 0,
       minLength: 1,
+      selectOnBlur: false,
       extractSearchTerms: function (suggestion) {
         return suggestion;
       },
@@ -141,6 +142,9 @@
         })
         .blur(function () {
           clearTimeout(search_timeout);
+          if (options.selectOnBlur) {
+            selectActive();
+          }
           closing_timeout = setTimeout(hideSuggestions, 10);
         })
         .keydown(function (e) {

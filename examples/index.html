@@ -37,5 +37,20 @@
         })
       </script>
     </section>
+
+    <section>
+      <h2>Select on blur</h2>
+      <input id="select-on-blur">
+      
+      <script type="text/javascript" charset="utf-8">
+        $(function () {
+          $("#select-on-blur").suggestible({
+           source: ["Chicago", "Boulder", "New York"],
+            selectOnBlur: true
+          });
+        })
+      </script>
+    </section>
+
   </body>
 </html>
