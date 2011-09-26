@@ -172,7 +172,7 @@
             search_timeout = setTimeout(function() {
               // only search if the value changed
               if (lastSearch != $this.val()) {
-                search($this.val(), loadSuggestions);
+                search($.trim($this.val()), loadSuggestions);
               }
             }, options.delay );
             break;
