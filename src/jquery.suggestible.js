@@ -37,7 +37,7 @@
             match = true;
             return;
           }
-        })
+        });
         return match;
       });
     }
@@ -148,6 +148,7 @@
           closing_timeout = setTimeout(hideSuggestions, 10);
         })
         .keydown(function (e) {
+          e.stopPropagation();
           switch(e.keyCode) {
           case 38:
             moveSelection('up');
