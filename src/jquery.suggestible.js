@@ -148,16 +148,16 @@
           if ($results_ul.html() !== "") {
             showSuggestions();
           }
-          clearTimeout(pollTimeout);
+          clearInterval(pollTimeout);
           pollTimeout = setInterval(checkForChanges, 100);
         })
         .blur(function () {
           clearTimeout(search_timeout);
+          clearInterval(pollTimeout);
           if (options.selectOnBlur) {
             selectActive();
           }
           closing_timeout = setTimeout(hideSuggestions, 10);
-          clearTimeout(pollTimeout);
         })
         .keydown(function (e) {
           e.stopPropagation();
