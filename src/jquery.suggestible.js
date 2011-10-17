@@ -58,7 +58,8 @@
       var lastSearch = false;
       var search_timeout;
       var closing_timeout;
-      var suggestionsActive = false;
+      var pollTimeout;
+      var suggestionsActive = false;  
 
       // Setup HTML
       $this.attr("autocomplete","off").addClass("suggestible-input").val(options.startText);
@@ -134,11 +135,21 @@
         }
       }
 
+      function checkForChanges() {
+        console.debug("checkForChanges");
+        // only search if the value changed
+        if (lastSearch != $this.val()) {
+          search($.trim($this.val()), loadSuggestions);
+        }
+      }
+
       $this
         .focus(function () {
           if ($results_ul.html() !== "") {
             showSuggestions();
           }
+          clearTimeout(pollTimeout);
+          pollTimeout = setInterval(checkForChanges, 100);
         })
         .blur(function () {
           clearTimeout(search_timeout);
@@ -146,6 +157,7 @@
             selectActive();
           }
           closing_timeout = setTimeout(hideSuggestions, 10);
+          clearTimeout(pollTimeout);
         })
         .keydown(function (e) {
           e.stopPropagation();
@@ -170,12 +182,7 @@
             break;
           default:
             clearTimeout(search_timeout);
-            search_timeout = setTimeout(function() {
-              // only search if the value changed
-              if (lastSearch != $this.val()) {
-                search($.trim($this.val()), loadSuggestions);
-              }
-            }, options.delay );
+            search_timeout = setTimeout(checkForChanges, options.delay);
             break;
           }
         });
