@@ -136,7 +136,6 @@
       }
 
       function checkForChanges() {
-        console.debug("checkForChanges");
         // only search if the value changed
         if (lastSearch != $this.val()) {
           search($.trim($this.val()), loadSuggestions);
