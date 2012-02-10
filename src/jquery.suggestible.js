@@ -6,9 +6,6 @@
       minLength: 1,
       selectOnBlur: false,
       matchAnywhereInString: false,
-      extractSearchTerms: function (suggestion) {
-        return suggestion;
-      },
       formatSuggestion: function (suggestion, search_term) {
         return suggestion;
       },
