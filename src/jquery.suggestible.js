@@ -5,6 +5,7 @@
       delay: 0,
       minLength: 1,
       selectOnBlur: false,
+      matchAnywhereInString: false,
       extractSearchTerms: function (suggestion) {
         return suggestion;
       },
@@ -19,7 +20,7 @@
       },
       onSelect: function (value, suggestible) {
         $(suggestible).val(value);
-      }
+      },
     };
     var options = $.extend(defaults, options);
     var source;
@@ -29,7 +30,11 @@
     }
     
     function filter(array, term) {
-      var matcher = new RegExp('^' + escapeRegex(term), "i");
+      var pattern = escapeRegex(term);
+      if (!options.matchAnywhereInString) {
+        pattern = '^' + pattern;
+      }
+      var matcher = new RegExp(pattern, "i");
       return $.grep(array, function(value) {
         var match = false;
         $.each(options.extractSearchTerms(value), function (index, term) {
