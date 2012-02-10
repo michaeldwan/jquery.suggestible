@@ -5,7 +5,7 @@
       delay: 0,
       minLength: 1,
       selectOnBlur: false,
-      alwaysShow: true,
+      alwaysShow: false,
       formatSuggestion: function (suggestion, search_term) {
         return suggestion;
       },
@@ -33,7 +33,7 @@
     }
     
     function filter(array, term) {
-      var matcher = new RegExp(options.buildRegexPattern(escapeRegex(term)), "i")
+      var matcher = new RegExp(options.buildRegex(escapeRegex(term)), "i")
       return $.grep(array, function(value) {
         var match = false;
         $.each(options.extractSearchTerms(value), function (index, term) {
