@@ -5,7 +5,7 @@
       delay: 0,
       minLength: 1,
       selectOnBlur: false,
-      matchAnywhereInString: false,
+      alwaysShow: true,
       formatSuggestion: function (suggestion, search_term) {
         return suggestion;
       },
@@ -18,6 +18,12 @@
       onSelect: function (value, suggestible) {
         $(suggestible).val(value);
       },
+      addElementToDom: function (suggestible, resultsHolder) {
+        suggestible.after(resultsHolder);
+      },
+      buildRegex: function (term) {
+        return '^' + term; 
+      }
     };
     var options = $.extend(defaults, options);
     var source;
@@ -27,11 +33,7 @@
     }
     
     function filter(array, term) {
-      var pattern = escapeRegex(term);
-      if (!options.matchAnywhereInString) {
-        pattern = '^' + pattern;
-      }
-      var matcher = new RegExp(pattern, "i");
+      var matcher = new RegExp(options.buildRegexPattern(escapeRegex(term)), "i")
       return $.grep(array, function(value) {
         var match = false;
         $.each(options.extractSearchTerms(value), function (index, term) {
@@ -68,10 +70,18 @@
       var $results_holder = $('<div class="suggestible-results" id="suggestible-results-' + id + '"></div>').hide();
       var $results_ul =  $('<ul class="suggestible-list"></ul>');
       $results_holder.html($results_ul);
-      $this.after($results_holder);
-      
+      options.addElementToDom($this, $results_holder);
+
+      if (options.alwaysShow) {
+        options.minLength = -1;
+        search("", loadSuggestions);
+      }
+
       function search(term, callback) {
         lastSearch = $this.val();
+        if (callback == undefined) {
+          callback = loadSuggestions;
+        }
 
         if ( term.length < options.minLength ) {
           clearSearch();
@@ -105,14 +115,19 @@
       
       function hideSuggestions () {
         clearTimeout(closing_timeout);
+        if (options.alwaysShow) {
+          return true;
+        }
         $results_holder.hide();
-        suggestionsActive = false;
+        return suggestionsActive = false;
       }
 
       function selectActive () {
         var raw_data = $("li.active", $results_ul).data("item");
-        hideSuggestions();
-        clearSearch();
+        if (!options.alwaysShow) {
+          hideSuggestions();
+          clearSearch();          
+        }
         if (raw_data) {
           options.onSelect(raw_data, $this);
         }
@@ -148,6 +163,8 @@
         .focus(function () {
           if ($results_ul.html() !== "") {
             showSuggestions();
+          } else if (options.showListOnFocus) {
+            search("", loadSuggestions);
           }
           clearInterval(pollTimeout);
           pollTimeout = setInterval(checkForChanges, 100);
@@ -195,6 +212,5 @@
             $(this).addClass("active");
           });
     });
-    
   };
 })(jQuery);

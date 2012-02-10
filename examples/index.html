@@ -52,5 +52,36 @@
       </script>
     </section>
 
+
+    <section>
+    <h2>Always show the suggestions</h2>
+      <script type="text/javascript" charset="utf-8">
+        $(function () {
+          $("#always-show").suggestible({
+            source: ["Chicago", "Boulder", "New York"],
+            alwaysShow: true,
+            buildRegexPattern: function (term) {
+              if (term == "") {
+                return '.';
+              } else {
+                return term;
+              }
+            },
+            addElementToDom: function (suggestible, resultsHolder) {
+              $("#custom-results-holder").html(resultsHolder);
+              resultsHolder.show();
+            },
+            onSelect: function (value, suggestible) {
+            },
+          });
+        })
+      </script>
+
+      <input id="always-show">
+
+      <div id="custom-results-holder">
+      </div>
+    </section>
+
   </body>
 </html>
